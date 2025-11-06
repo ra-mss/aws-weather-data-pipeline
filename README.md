@@ -1,24 +1,24 @@
-# \# Proyecto: Pipeline de Datos del Clima en AWS
+\# Proyecto: Pipeline de Datos del Clima en AWS
 
-# 
 
-# \## Objetivo
 
-# Este proyecto implementa un pipeline de datos diario y sin servidor (serverless) en AWS para extraer el clima actual de Guadalajara desde la API de OpenWeatherMap y almacenarlo en S3 para análisis futuro.
+\## Objetivo
 
-# 
+Este proyecto implementa un pipeline de datos diario y sin servidor (serverless) en AWS para extraer el clima actual de Guadalajara desde la API de OpenWeatherMap y almacenarlo en S3 para análisis futuro.
 
-# \## Tecnologías Utilizadas
 
-# \- Python
 
-# \- OpenWeatherMap API
+\## Tecnologías Utilizadas
 
-# \- AWS Lambda
+\- Python
 
-# \- AWS S3
+\- OpenWeatherMap API
 
-# \- Amazon EventBridge
+\- AWS Lambda
 
-# \- GitHub
+\- AWS S3
+
+\- Amazon EventBridge
+
+\- GitHub
 
