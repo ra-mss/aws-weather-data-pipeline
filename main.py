@@ -3,18 +3,26 @@ import json
 from datetime import datetime
 import os
 
-# API URL
-API_URL = "https://datos.cdmx.gob.mx/api/3/action/datastore_search?resource_id=cce544e1-dc6b-42b4-bc27-0d8e6eb3ed72&limit=1000"
+#CONFIGURACIÓN
 
-# Crear carpeta para guardar los datos
+API_KEY = "5b3e673a3462a698120c6a621b8df17d" 
+
+# Coordenadas de Guadalajara (puedes cambiarlas por cualquier ciudad)
+# Para obtenerlas: https://www.latlong.net/
+LAT = "20.6736" 
+LON = "-103.344"
+
+API_URL = f"https://api.openweathermap.org/data/2.5/weather?lat={LAT}&lon={LON}&appid={API_KEY}&units=metric"
+
+# Carpeta para guardar los datos
 OUTPUT_DIR = "datos_locales"
 
-def fetch_and_save_metro_data():
+def fetch_and_save_weather_data():
     """
-    Extrae datos de la API de afluencia del Metro CDMX y los guarda 
-    en un archivo JSON dentro de la carpeta 'datos_locales'.
+    Extrae datos del clima actual de OWM y los guarda en un archivo JSON
+    dentro de la carpeta 'datos_locales'.
     """
-    print("Iniciando extracción de datos...")
+    print("Iniciando extracción de datos del clima...")
 
     try:
         response = requests.get(API_URL)
@@ -24,34 +32,32 @@ def fetch_and_save_metro_data():
         print("Conexión con la API exitosa.")
         data = response.json()
         
-        # Validamos que la respuesta es la que esperamos
-        if not data.get('success'):
-            print("Error: La API no reportó éxito en la respuesta.")
-            return None, None
-            
-        records = data['result']['records']
+        # Añadir una marca de tiempo de cuándo lo consultamos
+        data['extraction_timestamp_utc'] = datetime.utcnow().isoformat()
         
         # Crear la carpeta de salida si no existe
         if not os.path.exists(OUTPUT_DIR):
             os.makedirs(OUTPUT_DIR)
         
-        # Generar un nombre de archivo único con la fecha de hoy
-        today_str = datetime.now().strftime("%Y-%m-%d")
-        file_name = f"afluencia_metro_{today_str}.json"
+        # Generar un nombre de archivo único con la fecha y hora
+        now_str = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+        file_name = f"clima_gdl_{now_str}.json"
         file_path = os.path.join(OUTPUT_DIR, file_name)
         
         # Guardar los datos en el archivo localmente para probar
         with open(file_path, 'w', encoding='utf-8') as f:
-            json.dump(records, f, ensure_ascii=False, indent=4)
+            json.dump(data, f, ensure_ascii=False, indent=4)
         
         print(f"Datos guardados exitosamente en {file_path}")
-        return file_path, records
+        return file_path, data
 
+    except requests.exceptions.HTTPError as e:
+        # Errores específicos de la API (ej. API key incorrecta, 401)
+        print(f"Error HTTP: {e}")
+        print(f"Respuesta de la API: {e.response.text}")
+        return None, None
     except requests.exceptions.RequestException as e:
         print(f"Error al conectar con la API: {e}")
-        return None, None
-    except KeyError:
-        print("Error: La estructura del JSON de la API no es la esperada.")
         return None, None
     except Exception as e:
         print(f"Un error inesperado ocurrió: {e}")
@@ -59,4 +65,4 @@ def fetch_and_save_metro_data():
 
 # Esto es para que podamos probarlo directamente desde la terminal
 if __name__ == "__main__":
-    fetch_and_save_metro_data()
+    fetch_and_save_weather_data()

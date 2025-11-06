@@ -1,17 +1,24 @@
-# Pipeline de Datos Automatizado - Afluencia Metro CDMX
+# \# Proyecto: Pipeline de Datos del Clima en AWS
 
-## Objetivo
-Este proyecto implementa un pipeline de datos sin servidor (serverless) en AWS para extraer, procesar y almacenar diariamente la información sobre la afluencia en el Metro de la Ciudad de México.
+# 
 
-## Arquitectura
-(Diagrama simple más adelante)
+# \## Objetivo
 
-## Tecnologías Utilizadas
-- Python
-- AWS Lambda
-- AWS S3
-- Amazon EventBridge
-- GitHub
+# Este proyecto implementa un pipeline de datos diario y sin servidor (serverless) en AWS para extraer el clima actual de Guadalajara desde la API de OpenWeatherMap y almacenarlo en S3 para análisis futuro.
 
-## Proceso
-(Pasos a seguir)
+# 
+
+# \## Tecnologías Utilizadas
+
+# \- Python
+
+# \- OpenWeatherMap API
+
+# \- AWS Lambda
+
+# \- AWS S3
+
+# \- Amazon EventBridge
+
+# \- GitHub
+
