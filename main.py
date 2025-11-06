@@ -2,15 +2,21 @@ import requests
 import json
 from datetime import datetime
 import os
+from dotenv import load_dotenv 
 
-#CONFIGURACIÓN
+# CONFIGURACIÓN
+load_dotenv() 
 
-API_KEY = "5b3e673a3462a698120c6a621b8df17d" 
+# Leer la llave desde el entorno
+API_KEY = os.environ.get("API_KEY") 
 
-# Coordenadas de Guadalajara (puedes cambiarlas por cualquier ciudad)
-# Para obtenerlas: https://www.latlong.net/
+# Coordenadas de Guadalajara
 LAT = "20.6736" 
 LON = "-103.344"
+
+# Revisar API_KEY
+if not API_KEY:
+    raise EnvironmentError("No se encontró la API_KEY. Asegúrate de crear un archivo .env")
 
 API_URL = f"https://api.openweathermap.org/data/2.5/weather?lat={LAT}&lon={LON}&appid={API_KEY}&units=metric"
 
